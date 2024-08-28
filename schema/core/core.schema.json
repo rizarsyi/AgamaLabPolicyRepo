@@ -1,0 +1,385 @@
+{
+  "Jans": {
+    "commonTypes": {
+      "Url": {
+        "type": "Record",
+        "attributes": {
+          "host": {
+            "type": "String"
+          },
+          "path": {
+            "type": "String"
+          },
+          "protocol": {
+            "type": "String"
+          }
+        }
+      },
+      "Context": {
+        "type": "Record",
+        "attributes": {
+          "current_time": {
+            "type": "Long"
+          },
+          "device_health": {
+            "type": "Set",
+            "element": {
+              "type": "String"
+            }
+          },
+          "fraud_indicators": {
+            "type": "Set",
+            "element": {
+              "type": "String"
+            }
+          },
+          "geolocation": {
+            "type": "Set",
+            "element": {
+              "type": "String"
+            }
+          },
+          "network": {
+            "type": "Extension",
+            "name": "ipaddr"
+          },
+          "network_type": {
+            "type": "String"
+          },
+          "operating_system": {
+            "type": "String"
+          },
+          "user_agent": {
+            "type": "String"
+          }
+        }
+      },
+      "EmailAddress": {
+        "type": "Record",
+        "attributes": {
+          "domain": {
+            "type": "String"
+          },
+          "id": {
+            "type": "String"
+          }
+        }
+      }
+    },
+    "entityTypes": {
+      "Application": {
+        "shape": {
+          "type": "Record",
+          "attributes": {
+            "client": {
+              "type": "Entity",
+              "name": "Client"
+            },
+            "name": {
+              "type": "String"
+            }
+          }
+        }
+      },
+      "UserinfoToken": {
+        "shape": {
+          "type": "Record",
+          "attributes": {
+            "aud": {
+              "type": "String"
+            },
+            "birthdate": {
+              "type": "String"
+            },
+            "email": {
+              "type": "EmailAddress"
+            },
+            "exp": {
+              "type": "Long"
+            },
+            "iat": {
+              "type": "Long"
+            },
+            "iss": {
+              "type": "Entity",
+              "name": "TrustedIssuer"
+            },
+            "jti": {
+              "type": "String"
+            },
+            "name": {
+              "type": "String"
+            },
+            "phone_number": {
+              "type": "String"
+            },
+            "role": {
+              "type": "Set",
+              "element": {
+                "type": "String"
+              }
+            },
+            "sub": {
+              "type": "String"
+            }
+          }
+        }
+      },
+      "AccessToken": {
+        "shape": {
+          "type": "Record",
+          "attributes": {
+            "aud": {
+              "type": "String"
+            },
+            "exp": {
+              "type": "Long"
+            },
+            "iat": {
+              "type": "Long"
+            },
+            "iss": {
+              "type": "Entity",
+              "name": "TrustedIssuer"
+            },
+            "jti": {
+              "type": "String"
+            },
+            "nbf": {
+              "type": "Long"
+            },
+            "scope": {
+              "type": "Set",
+              "element": {
+                "type": "String"
+              }
+            }
+          }
+        }
+      },
+      "TrustedIssuer": {
+        "shape": {
+          "type": "Record",
+          "attributes": {
+            "issuer_entity_id": {
+              "type": "Url"
+            }
+          }
+        }
+      },
+      "Role": {},
+      "Client": {
+        "shape": {
+          "type": "Record",
+          "attributes": {
+            "client_id": {
+              "type": "String"
+            },
+            "iss": {
+              "type": "Entity",
+              "name": "TrustedIssuer"
+            }
+          }
+        }
+      },
+      "User": {
+        "memberOfTypes": [
+          "Role"
+        ],
+        "shape": {
+          "type": "Record",
+          "attributes": {
+            "email": {
+              "type": "EmailAddress"
+            },
+            "phone_number": {
+              "type": "String"
+            },
+            "role": {
+              "type": "Set",
+              "element": {
+                "type": "String"
+              }
+            },
+            "sub": {
+              "type": "String"
+            },
+            "username": {
+              "type": "String"
+            }
+          }
+        }
+      },
+      "IDToken": {
+        "shape": {
+          "type": "Record",
+          "attributes": {
+            "acr": {
+              "type": "Set",
+              "element": {
+                "type": "String"
+              }
+            },
+            "amr": {
+              "type": "String"
+            },
+            "aud": {
+              "type": "String"
+            },
+            "azp": {
+              "type": "String"
+            },
+            "birthdate": {
+              "type": "String"
+            },
+            "email": {
+              "type": "EmailAddress"
+            },
+            "exp": {
+              "type": "Long"
+            },
+            "iat": {
+              "type": "Long"
+            },
+            "iss": {
+              "type": "Entity",
+              "name": "TrustedIssuer"
+            },
+            "jti": {
+              "type": "String"
+            },
+            "name": {
+              "type": "String"
+            },
+            "phone_number": {
+              "type": "String"
+            },
+            "role": {
+              "type": "Set",
+              "element": {
+                "type": "String"
+              }
+            },
+            "sub": {
+              "type": "String"
+            }
+          }
+        }
+      }
+    },
+    "actions": {
+      "Execute": {
+        "appliesTo": {
+          "resourceTypes": [
+            "Application"
+          ],
+          "principalTypes": [
+            "User",
+            "Role"
+          ],
+          "context": {
+            "type": "Context"
+          }
+        }
+      },
+      "Search": {
+        "appliesTo": {
+          "resourceTypes": [
+            "Application"
+          ],
+          "principalTypes": [
+            "User",
+            "Role"
+          ],
+          "context": {
+            "type": "Context"
+          }
+        }
+      },
+      "Monitor": {
+        "appliesTo": {
+          "resourceTypes": [
+            "Application"
+          ],
+          "principalTypes": [
+            "User",
+            "Role"
+          ],
+          "context": {
+            "type": "Context"
+          }
+        }
+      },
+      "Share": {
+        "appliesTo": {
+          "resourceTypes": [
+            "Application"
+          ],
+          "principalTypes": [
+            "User",
+            "Role"
+          ],
+          "context": {
+            "type": "Context"
+          }
+        }
+      },
+      "Write": {
+        "appliesTo": {
+          "resourceTypes": [
+            "Application"
+          ],
+          "principalTypes": [
+            "User",
+            "Role"
+          ],
+          "context": {
+            "type": "Context"
+          }
+        }
+      },
+      "Compare": {
+        "appliesTo": {
+          "resourceTypes": [
+            "Application"
+          ],
+          "principalTypes": [
+            "User",
+            "Role"
+          ],
+          "context": {
+            "type": "Context"
+          }
+        }
+      },
+      "Tag": {
+        "appliesTo": {
+          "resourceTypes": [
+            "Application"
+          ],
+          "principalTypes": [
+            "User",
+            "Role"
+          ],
+          "context": {
+            "type": "Context"
+          }
+        }
+      },
+      "Read": {
+        "appliesTo": {
+          "resourceTypes": [
+            "Application"
+          ],
+          "principalTypes": [
+            "User",
+            "Role"
+          ],
+          "context": {
+            "type": "Context"
+          }
+        }
+      }
+    }
+  }
+}
